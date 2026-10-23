@@ -2,8 +2,10 @@
 name: Build Golden Hands
 
 on:
-  push:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -20,10 +22,12 @@ jobs:
           java-version: '21'
 
       - name: Compilar mod
+        working-directory: GoldenHands-Fabric-1.21.11
         run: chmod +x gradlew && ./gradlew build
 
-      - name: Guardar archivo JAR
+      - name: Guardar JAR
         uses: actions/upload-artifact@v4
         with:
           name: GoldenHands-Fabric-1.21.11
-          path: build/libs/*.jar
+          path: GoldenHands-Fabric-1.21.11/build/libs/*.jar
+          if-no-files-found: error
