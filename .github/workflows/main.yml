@@ -1,0 +1,29 @@
+
+name: Build Golden Hands
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Compilar mod
+        run: chmod +x gradlew && ./gradlew build
+
+      - name: Guardar archivo JAR
+        uses: actions/upload-artifact@v4
+        with:
+          name: GoldenHands-Fabric-1.21.11
+          path: build/libs/*.jar
